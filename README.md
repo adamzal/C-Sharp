@@ -1,1 +1,1 @@
-# C-Sharp
+# C# - nauka programowania
