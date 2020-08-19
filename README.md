@@ -1,5 +1,5 @@
-# C# - nauka programowania
-na podstawie ksiązki:
+# Simple program in C#
+based on the book
 
 Marcin Lis - C#
-Wydanie III
+III edition
