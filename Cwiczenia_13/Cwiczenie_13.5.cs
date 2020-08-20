@@ -33,6 +33,7 @@ public class Program
                                 {
                                         Console.Write("tab[{0}][{1}][{2}]= {3}\t",i,j,k,tab[i][j][k]);
                                 }
+				Console.WriteLine("");
                         }
                         Console.WriteLine("");
                 }
