@@ -1,4 +1,4 @@
-# Simple program in C#
+# Simple programs in C#
 based on the book
 
 Marcin Lis - C#
