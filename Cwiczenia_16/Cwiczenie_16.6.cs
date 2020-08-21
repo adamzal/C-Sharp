@@ -2,13 +2,19 @@ using System;
 
 class Punkt
 {
-	int x;
-	int y;
+	double x;
+	double y;
 
 	class Kwadrat
 	{
+		int bok;
 		Punkt D=new Punkt();
 		Punkt B=new Punkt();
+
+		int abs(int a)
+		{
+			return a>=0?a:-a;
+		}
 
 		Kwadrat(Punkt D,Punkt B)
 		{
@@ -18,6 +24,7 @@ class Punkt
 
 		Kwadrat(Punkt D,int bok)
 		{
+			this.bok=bok;
 			this.D=D;
 			B.x=D.x+bok;
 			B.y=D.y-bok;
@@ -25,14 +32,22 @@ class Punkt
 
 		Kwadrat(int x,int y,int bok)
 		{
+			this.bok=bok
 			D.x=x+bok/2=D.y;
 			B.x=x-bok/2=B.y;
 		}
 
 		Kwadrat(int x,int y,double pole)
 		{
-			int bok=Math.sqrt(pole);
-			Kwadrat(x,y,bok)
+			this.bok=Math.Sqrt(pole);
+			D.y=D.x=x+bok/2;
+			B.y=B.x=x-bok/2;
+		}
+
+		void WyswietlWspolrzedne()
+		{
+			Console.WriteLine("B({0};{1})",B.x,B.y);
+                        Console.WriteLine("B({0};{1})",D.x,D.y);
 		}
 
 		public static void Main()
