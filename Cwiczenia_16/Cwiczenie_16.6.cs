@@ -10,11 +10,6 @@ class Punkt
 		Punkt D=new Punkt();
 		Punkt B=new Punkt();
 
-		int abs(int a)
-		{
-			return a>=0?a:-a;
-		}
-
 		Kwadrat(Punkt D,Punkt B)
 		{
 			this.D=D;
