@@ -11,10 +11,27 @@ class Punkt
 		Punkt D = new Punkt();
 		Punkt B = new Punkt();
 
+		double abs(double a)
+		{
+			return a >= 0 ? a : -a;
+		}
+
 		Kwadrat(Punkt D, Punkt B)
 		{
 			this.D = D;
 			this.B = B;
+			if (D.x >= 0 && B.x >= 0)
+			{
+				this.bok = B.x - D.x;
+			}
+			if (D.x < 0 && B.x >= 0)
+			{
+				this.bok = abs(D.x) + B.x;
+			}
+			if (D.x < 0 && B.x < 0)
+			{
+				this.bok = abs(D.x) - abs(B.x);
+			}
 		}
 
 		Kwadrat(Punkt D, double bok)
@@ -51,17 +68,17 @@ class Punkt
 		void WyswietlWspolrzedne()
 		{
 			Console.WriteLine("B({0};{1})", B.x, B.y);
-			Console.WriteLine("B({0};{1})", D.x, D.y);
+			Console.WriteLine("D({0};{1}) bok={2}", D.x, D.y, bok);
 		}
 
 		public static void Main()
 		{
 			Punkt B = new Punkt();
-			B.x = -4;
-			B.y = 5;
+			B.x = 0;
+			B.y = 1;
 			Punkt D = new Punkt();
-			D.x = 0;
-			D.y = 1;
+			D.x = -4;
+			D.y = 5;
 			Kwadrat ABCD = new Kwadrat(D, B);
 			ABCD.WyswietlWspolrzedne();
 			Kwadrat abcd = new Kwadrat(D, 5);
