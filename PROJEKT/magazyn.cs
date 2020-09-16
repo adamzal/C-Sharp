@@ -149,11 +149,4 @@ public class Magazyn
             Console.WriteLine("");
         }
     }
-
-    public static void Main()
-    {
-        Magazyn m = new Magazyn();
-        m.wyswietlMagazyn();
-        Console.ReadKey();
-    }
 }
