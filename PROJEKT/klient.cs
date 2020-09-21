@@ -1,52 +1,98 @@
+using System;
+
+
 public class Klient
 {
-    string imie;
-    string nazwisko;
-    string adres_email;
-    double dostepne_srodki;
-    double ile_wydane;
+    string _imie;
+    public string imie
+    {
+        get
+        {
+            return _imie;
+        }
+        set
+        {
+            _imie = value;
+        }
+    }
 
-    public Klient(string imie,string nazwisko,string adres_email)
+    string _nazwisko;
+    public string nazwisko
+    {
+        get
+        {
+            return _nazwisko;
+        }
+        set
+        {
+            _nazwisko = value;
+        }
+    }
+
+    string _adres_email;
+    public string adres_email
+    {
+        get
+        {
+            return _adres_email;
+        }
+        set
+        {
+            _adres_email = value;
+        }
+    }
+    protected string _login;
+    public string login
+    {
+        get
+        {
+            return _login;
+        }
+        set
+        {
+            _login = value;
+        }
+    }
+
+    protected string _haslo;
+    public string haslo
+    {
+        get
+        {
+            return _haslo;
+        }
+        set
+        {
+            _haslo = value;
+        }
+    }
+
+    public Klient(string imie=null, string nazwisko=null, string adres_email=null, string login=null,string haslo=null)
     {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.adres_email = adres_email;
-        dostepne_srodki = 0;
-        ile_wydane = 0;
+        this.login = login;
+        this.haslo = haslo;
     }
 
-    public void kup(string nazwa,int ilosc)
+    public void kup(string nazwa, int ilosc)
     {
         Sklep sk = new Sklep();
         Magazyn m = new Magazyn();
-        Produkt p = new Produkt();
-        if(m.getProdukt(nazwa)==null)
+        if (m.getProdukt(nazwa) == null)
         {
-            Console.WriteLine("Produktu o nazwie {0} nie ma w asortymencie sklepu",nazwa);
+            Console.WriteLine("Produktu o nazwie {0} nie ma w asortymencie sklepu", nazwa);
         }
         else
         {
-            p = m.getProdukt(nazwa);
-            if (p.cena * ilosc > dostepne_srodki)
-            {
-                Console.WriteLine("Nie masz wystarczająco dużo pieniędzy aby kupić {0} {1} {2}", ilosc, p.jednostka, nazwa);
-            }
-            else
-            {
-                dostepne_srodki -= p.cena * ilosc;
-                ile_wydane += p.cena * ilosc;
-                sk.sprzedaj(nazwa, ilosc);
-            }
-        }        
+            sk.sprzedaj(nazwa, ilosc);
+        }
     }
 
-    public void doladujKonto(double kwota)
+    public string wyswietlDane()
     {
-        dostepne_srodki += kwota;
-    }
-
-    public void wyswietlDane()
-    {
-        Console.WriteLine("Imię: {0} Nazwisko: {1} Adres e-mail: {2} Dostępne środki: {3} zł Wydane środki: {4} zł", imie, nazwisko, adres_email, dostepne_srodki,ile_wydane);
+        return "Imi�:\n" + imie + "\n\n Nazwisko:\n" + nazwisko + "\n\n Adres e-mail:\n" + adres_email;
     }
 }
+
