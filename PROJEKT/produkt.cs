@@ -1,3 +1,6 @@
+using System;
+
+
 public class Produkt
 {
     string _nazwa;
@@ -58,8 +61,9 @@ public class Produkt
         this.cena = cena;
     }
 
-    public void ProduktInfo()
+    public string ProduktInfo()
     {
-        Console.WriteLine("Produkt: {0} \t Ilość: {1} {2} \t Cena: {3}", nazwa, ilosc, jednostka, cena);
+        return nazwa;
     }
 }
+
