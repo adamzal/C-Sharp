@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+
 public class Sklep
 {
     double zarobek;
@@ -7,14 +10,14 @@ public class Sklep
         StreamReader sr = new StreamReader(new FileStream("sklep.txt", FileMode.OpenOrCreate));
         string line = sr.ReadLine();
         sr.Close();
-        if(line!=null)
+        if (line != null)
         {
             zarobek = Convert.ToDouble(line);
         }
         else
         {
             zarobek = 0;
-        }        
+        }
     }
     public void sprzedaj(string nazwa, int ilosc)
     {
@@ -28,3 +31,4 @@ public class Sklep
         sw.Close();
     }
 }
+
