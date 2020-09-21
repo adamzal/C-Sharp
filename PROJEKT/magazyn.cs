@@ -1,6 +1,10 @@
+using System;
+using System.IO;
+
+
 public class Magazyn
 {
-     Produkt[] produkt;
+    Produkt[] produkt;
 
     public Magazyn()
     {
@@ -14,11 +18,11 @@ public class Magazyn
         if (line != null)
         {
             produkt = new Produkt[Int32.Parse(line)];
-            for(int i=0;i<produkt.Length&&line!=null;i++)
+            for (int i = 0; i < produkt.Length && line != null; i++)
             {
                 line = sr.ReadLine();
                 string[] s = line.Split(new char[] { ';' });
-                produkt[i] = new Produkt(s[0], Int32.Parse(s[1]),s[2], Convert.ToDouble(s[3]));
+                produkt[i] = new Produkt(s[0], Int32.Parse(s[1]), s[2], Convert.ToDouble(s[3]));
             }
         }
         else
@@ -50,25 +54,25 @@ public class Magazyn
                 czyjest = true;
                 if (ilosc < 0)
                 {
-                    Console.WriteLine("Podano ujemnÄ… iloÅ›Ä‡ {0} produktu {1}",ilosc,nazwa);
+                    Console.WriteLine("Podano ujemn¹ iloœæ {0} produktu {1}", ilosc, nazwa);
                 }
                 else
                 {
                     if (produkt[i].ilosc - ilosc < 0)
                     {
-                        Console.WriteLine("Na magazynie zostaÅ‚o {0} {1} {2} - nie moÅ¼emy sprzedaÄ‡ {3}.", produkt[i].ilosc, produkt[i].jednostka, produkt[i].nazwa, ilosc);
+                        Console.WriteLine("Na magazynie zosta³o {0} {1} {2} - nie mo¿emy sprzedaæ {3}.", produkt[i].ilosc, produkt[i].jednostka, produkt[i].nazwa, ilosc);
                     }
                     else
                     {
                         produkt[i].ilosc -= ilosc;
-                        zapisz(produkt);                        
+                        zapisz(produkt);
                     }
                 }
             }
         }
-        if(czyjest==false)
+        if (czyjest == false)
         {
-            Console.WriteLine("Produktu {0} nie ma na liÅ›cie", nazwa);
+            Console.WriteLine("Produktu {0} nie ma na liœcie", nazwa);
         }
     }
 
@@ -76,7 +80,7 @@ public class Magazyn
     {
         if (ilosc < 0)
         {
-            Console.WriteLine("Podana iloÅ›Ä‡ produktu {0} jest ujemna: {1}",nazwa,ilosc);
+            Console.WriteLine("Podana iloœæ produktu {0} jest ujemna: {1}", nazwa, ilosc);
         }
         else
         {
@@ -90,7 +94,7 @@ public class Magazyn
                 string line = sr.ReadLine();
                 sr.Close();
                 if (line == null)
-                {                   
+                {
                     produkt[0].nazwa = nazwa;
                     produkt[0].ilosc = ilosc;
                     produkt[0].jednostka = jednostka;
@@ -98,7 +102,7 @@ public class Magazyn
                     zapisz(produkt);
                 }
                 else
-                {                    
+                {
                     bool czyistnieje = false;
                     int a = 0;
                     while (!czyistnieje && a < produkt.Length)
@@ -138,9 +142,9 @@ public class Magazyn
 
     public Produkt getProdukt(string nazwa)
     {
-        for(int i=0;i<produkt.Length;i++)
+        for (int i = 0; i < produkt.Length; i++)
         {
-            if(produkt[i].nazwa==nazwa)
+            if (produkt[i].nazwa == nazwa)
             {
                 return produkt[i];
             }
@@ -148,11 +152,14 @@ public class Magazyn
         return null;
     }
 
-    public void wyswietlMagazyn()
+    public object[] magazynlist()
     {
+        string[] lista = new string[produkt.Length];
         for (int i = 0; i < produkt.Length; i++)
         {
-            produkt[i].ProduktInfo();
-        }        
+            lista[i]=produkt[i].ProduktInfo();
+        }
+        return lista;
     }
 }
+
