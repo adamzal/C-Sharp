@@ -41,8 +41,10 @@ public class MainForm : Form
     Button dodaj = new Button();
 
     string wybrany;
-    string[] koszyk;
     Label kosz = new Label();
+    Produkt[] p;
+    Button toSklep = new Button();
+    Button kup = new Button();
     public MainForm()
     {        
         Width = 500;
@@ -95,16 +97,34 @@ public class MainForm : Form
     {
         ukryj();
         Text = "Koszyk";
+        toSklep.Visible = true;
+        kosz.Visible = true;
+        kup.Visible = true;
         string show = "";
-        for(int i =0;i<koszyk.Length;i++)
-        {
-            show += koszyk[i] + "\n";
-        }
-        kosz.Text = show;
-        kosz.TextAlign = ContentAlignment.TopCenter;        
+        double wynik = 0;
+        kosz.TextAlign = ContentAlignment.TopCenter;
         kosz.Width = ClientSize.Width;
         kosz.Height = ClientSize.Height;
         Controls.Add(kosz);
+        if (p==null)
+        {
+            kosz.Text = "Koszyk jest pusty.";
+        }
+        else
+        {
+            for (int i = 0; i < p.Length; i++)
+            {
+                show += "Nazwa: " + p[i].nazwa + "\t Ilość: " + p[i].ilosc + "  " + p[i].jednostka + "\t Cena: " + p[i].cena + " zł\n";
+                wynik += p[i].cena * p[i].ilosc;
+            }
+            show += "\n\n Do zapłaty: " + wynik + " zł";
+            kosz.Text = show;
+            toSklep.Text = "Powrót";
+            toSklep.Click += Sklepform;                        
+            Controls.Add(kup);
+            Controls.Add(toSklep);
+        }
+        
     }
 
     void Rejestracjaform(object sender,EventArgs ea)
@@ -260,7 +280,7 @@ public class MainForm : Form
         Controls.Add(powrot);
     }
 
-    void Sklepform()
+    void Sklepform(object sender=null, EventArgs ea=null)
     {
         ukryj();
         Text = "Sklep";
@@ -304,8 +324,7 @@ public class MainForm : Form
 
         dodaj.Top = (ClientSize.Height - dodaj.Height) * 4 / 6;
         dodaj.Left=(ClientSize.Width - dodaj.Width) / 2;
-
-        lista.DropDownWidth = 200;
+        
         listprod.TextAlign = ContentAlignment.TopCenter;
         ilosc.TextAlign = ContentAlignment.TopCenter;
         ilosctext.TextAlign = HorizontalAlignment.Center;
@@ -320,7 +339,7 @@ public class MainForm : Form
     }
     void ukryj()
     {
-        lista.Visible=listprod.Visible=dodaj.Visible=ilosc.Visible=ilosctext.Visible= profil.Visible = powrot.Visible = nielog.Visible = Blog.Visible = Brej.Visible = Lzaloguj.Visible = Llogin.Visible = Llog.Visible = Lhaslo.Visible = Lhas.Visible = zarejestruj.Visible = imie.Visible = im.Visible = login.Visible = has1.Visible = has2.Visible = haslo1.Visible = haslo2.Visible = nazwisko.Visible = naz.Visible = log.Visible = email.Visible = ema.Visible = false;
+        kosz.Visible= lista.Visible=listprod.Visible=dodaj.Visible=ilosc.Visible=ilosctext.Visible= profil.Visible = powrot.Visible = nielog.Visible = Blog.Visible = Brej.Visible = Lzaloguj.Visible = Llogin.Visible = Llog.Visible = Lhaslo.Visible = Lhas.Visible = zarejestruj.Visible = imie.Visible = im.Visible = login.Visible = has1.Visible = has2.Visible = haslo1.Visible = haslo2.Visible = nazwisko.Visible = naz.Visible = log.Visible = email.Visible = ema.Visible = false;
     }
 
     void onListSelect(object sender = null, EventArgs ea = null)
@@ -329,26 +348,44 @@ public class MainForm : Form
     }
     void onDodaj(object sender=null, EventArgs ea=null)
     {
-        if(koszyk==null)
+        Magazyn m = new Magazyn();
+        if(m.getProdukt(wybrany).ilosc<Int32.Parse(ilosctext.Text))
         {
-            koszyk = new string[1];
-            koszyk[0] = wybrany;
+            MessageBox.Show("W asortymencie sklepu jest dostępnych "+m.getProdukt(wybrany).ilosc+" "+ m.getProdukt(wybrany).jednostka + " tego produktu.\n Wpisz ilość nie większą niż "+ m.getProdukt(wybrany).ilosc+" .", "Uwaga!");
         }
         else
         {
-            string[] kos = new string[koszyk.Length + 1];
-            for(int i=0;i<koszyk.Length;i++)
+            if (p == null)
             {
-                kos[i] = koszyk[i];
+                p = new Produkt[1];
+                p[0] = m.getProdukt(wybrany);
+                p[0].ilosc = Int32.Parse(ilosctext.Text);
+                ilosctext.Text = "";                                                
             }
-            kos[koszyk.Length + 1] = wybrany;
-            koszyk = kos;
-        }
+            else
+            {
+                Produkt[] kos = new Produkt[p.Length + 1];
+                for (int i = 0; i < p.Length; i++)
+                {
+                    kos[i] = p[i];
+                }
+                kos[p.Length + 1] = m.getProdukt(wybrany);
+                kos[p.Length + 1].ilosc = Int32.Parse(ilosctext.Text);
+                p = kos;
+                ilosctext.Text = "";                
+            }
+        }        
+    }
+
+    private void Lista_SelectedValueChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 
     void onWylogujClick(object sender,EventArgs ea)
     {
-        ukryj();     
+        ukryj();
+        user = null;
         noLogin();
     }
 
